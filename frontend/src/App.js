@@ -1,5 +1,5 @@
 import './App.css';
-import MapComponent from './leaflet/MapComponent';
+import MapComponent from './open_layers/MapComponent';
 
 const App = () => {
   return (
