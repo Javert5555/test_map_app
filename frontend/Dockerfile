@@ -4,6 +4,10 @@ WORKDIR /app
 COPY package*.json /app/
 RUN npm install
 COPY ./ /app/
+# Install nodemon for hot reloading
+RUN npm install -g nodemon
+
+# Start the app with nodemon
 RUN npm run build
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx

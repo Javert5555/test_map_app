@@ -9,6 +9,7 @@ function Model() {
     const [modelScore, setModelScore] = useState("");
 
     function validateForm() {
+      console.log('test')
         return Age > 0 && Age < 125;
     }
 
@@ -33,6 +34,7 @@ function Model() {
     function handleSubmit(event) {
         event.preventDefault();
         sendRequest();
+        console.log('AGE2');
         console.log(Age)
     }
     return (

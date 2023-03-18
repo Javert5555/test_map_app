@@ -2,9 +2,14 @@ from fastapi import FastAPI, Body, Depends
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import time
+import sys
 
 from user_handler import UserDataHandler
 from jwt_auth_handler import signJWT, JWTBearer
+print(f' SYS PATH - {sys.path}')
+from  models import Base
+import quiz
+from database import engine
 
 app = FastAPI()
 user_handler = UserDataHandler()
@@ -55,6 +60,13 @@ def score_model(item_id: int):
 @app.get('/time')
 def get_current_time():
     return {'time': time.time()}
+
+Base.metadata.create_all(bind=engine)
+app.include_router(quiz.router, tags=['Quizes'], prefix='/api/quizzes')
+
+@app.get("/api/healthchecker")
+def root():
+    return {"message": "Welcome to FastAPI with SQLAlchemy"}
 
 # sudo kill -9 `sudo lsof -t -i:8000`
 if __name__ == "__main__":

@@ -3,12 +3,15 @@ version: "3.7"
 services:
     db:
         build: postgres_db
+        container_name: db-c
         #ports:
         #  - 5432:5432
         environment:
         - POSTGRES_DB=${POSTGRES_DB}
         - POSTGRES_USER=${POSTGRES_USER}
         - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+        volumes:
+          - ./data/db_store:/var/lib/postgresql/data
         healthcheck:
           test: [ "CMD", "pg_isready", "-q", "-d", "${POSTGRES_DB}", "-U", "postgres" ]
           timeout: 45s
@@ -20,21 +23,35 @@ services:
     
     web:
         build: frontend
+        volumes:
+          - ./frontend:/app
+#        command: ["CMD", "nodemon", "--watch", "src", "--exec", "npm", "start"]
+        container_name: web-c
         ports:
           - 80:80
         depends_on:
           - api
+        networks:
+          local-net:
 
     api:
-        build: backend
+        restart: always
+        command: uvicorn main:app --host 0.0.0.0 --reload
+        volumes:
+          - ./backend/app:/app
+        build: backend/app
+        container_name: api-c
         environment:
           - PORT=80
           - DB_HOST=db
-        #ports:
-        #  - 8000:80
+        ports:
+          - 8000:8000
         depends_on:
           db:
             condition: service_healthy
+        networks:
+          local-net:
+            ipv4_address: 192.168.34.10
 
 networks:
     local-net:

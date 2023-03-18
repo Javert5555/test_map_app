@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 import {RecoilRoot} from 'recoil';
 import Login from "./Login"
+import Quiz from "./Quiz"
 import Register from "./Register"
 import Model from "./Model"
 
@@ -23,7 +24,7 @@ function App() {
             <Model />
           </Route>
           <Route path="/">
-            <Login />
+            <Quiz />
           </Route>
         </Switch>
       </Router>
