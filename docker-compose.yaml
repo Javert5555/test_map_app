@@ -11,7 +11,7 @@ services:
         - POSTGRES_USER=${POSTGRES_USER}
         - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
         volumes:
-          - ./data/db_store:/var/lib/postgresql/data
+          - postgres-vol:/var/lib/postgresql/data
         healthcheck:
           test: [ "CMD", "pg_isready", "-q", "-d", "${POSTGRES_DB}", "-U", "postgres" ]
           timeout: 45s
@@ -56,4 +56,6 @@ services:
 networks:
     local-net:
         external: true
-    
+
+volumes:
+  postgres-vol:

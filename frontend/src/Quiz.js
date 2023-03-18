@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     button: {
         background: 'linear-gradient(45deg, #2CB0CE 30%, #539EFF 90%)',
         width:'50%',
-        color: 'ffffff'
+        color: '#000'
         //position: 'absolute',
         //top: '70%',
     },
@@ -38,6 +38,20 @@ function Quiz() {
 
     function createQuiz(){
         // TODO
+        fetch('/api/healthchecker', {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
         fetch('/api/quizzes', {
             method: 'POST',
             mode: 'cors',

@@ -66,7 +66,7 @@ app.include_router(quiz.router, tags=['Quizes'], prefix='/api/quizzes')
 
 @app.get("/api/healthchecker")
 def root():
-    return {"message": "Welcome to FastAPI with SQLAlchemy"}
+    return {"message": "Welcome toasdasdasdasd"}
 
 # sudo kill -9 `sudo lsof -t -i:8000`
 if __name__ == "__main__":
